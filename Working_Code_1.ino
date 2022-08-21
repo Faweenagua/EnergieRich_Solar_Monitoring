@@ -78,7 +78,7 @@ void setup(){
   bme.setGasHeater(320, 150); // 320*C for 150 ms
 
   //set up pin to read voltage
-  pinMode(volt_pin, INPUT);
+  //pinMode(volt_pin, INPUT);
 }
 
 void loop(){
@@ -134,8 +134,7 @@ void loop(){
 
 /*reads voltage*/
 void getVoltage(){
-  voltage = 11.09*3.3*(analogRead(volt_pin)/4095.0);
-  //Serial.println(analogRead(volt_pin));
+  voltage = 14.09*3.3*(analogRead(volt_pin)/4095.0); // change 14.09 to 11.09
   //print to LCD
   lcdPrintFirstLine("Voltage:");
   lcdPrintSecondLine(String(voltage)+"V");
