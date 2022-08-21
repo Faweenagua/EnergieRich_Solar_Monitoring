@@ -134,7 +134,7 @@ void loop(){
 
 /*reads voltage*/
 void getVoltage(){
-  voltage = 14.09*3.3*(analogRead(volt_pin)/4095.0); // change 14.09 to 11.09
+  voltage = 15*3.3*(analogRead(volt_pin)/4095.0); // change 15 to 11.09
   //print to LCD
   lcdPrintFirstLine("Voltage:");
   lcdPrintSecondLine(String(voltage)+"V");
