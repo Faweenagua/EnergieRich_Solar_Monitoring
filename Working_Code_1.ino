@@ -35,6 +35,7 @@ float altitude = -1;
 
 /*Defining MACROS and pin numbers*/
 #define SEALEVELPRESSURE_HPA (1013.25)
+int volt_pin = 32;
 
 
 void setup(){
@@ -75,6 +76,9 @@ void setup(){
   bme.setPressureOversampling(BME680_OS_4X);
   bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
   bme.setGasHeater(320, 150); // 320*C for 150 ms
+
+  //set up pin to read voltage
+  pinMode(volt_pin, INPUT);
 }
 
 void loop(){
@@ -91,8 +95,8 @@ void loop(){
       getAirPollution();
       getAltitude();
     }
-    // getCurrent();
-    // getVoltage();
+     getVoltage();
+     getCurrent();
     // getDust();    
 
     /*Start post request to send data*/
@@ -128,21 +132,21 @@ void loop(){
   delay(30000);  //300000 - Send data every 5 minutes
 }
 
+/*reads voltage*/
+void getVoltage(){
+  voltage = 11.09*3.3*(analogRead(volt_pin)/4095.0);
+  //Serial.println(analogRead(volt_pin));
+  //print to LCD
+  lcdPrintFirstLine("Voltage:");
+  lcdPrintSecondLine(String(voltage)+"V");
+}
 
 /*reads current*/
 void getCurrent(){
-  current = random(20);
+  current = voltage/10.858;
   //print to LCD
   lcdPrintFirstLine("Current:");
-  lcdPrintSecondLine(String(current));
-}
-
-/*reads voltage*/
-void getVoltage(){
-  voltage = random(36);
-  //print to LCD
-  lcdPrintFirstLine("Voltage:");
-  lcdPrintSecondLine(String(voltage));
+  lcdPrintSecondLine(String(current)+"mA");
 }
 
 /*reads temperature*/
