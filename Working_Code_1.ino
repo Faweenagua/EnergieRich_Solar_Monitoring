@@ -49,6 +49,7 @@ void setup(){
   lcd.backlight();
   lcdPrintFirstLine("System Starting");
   lcdPrintSecondLine("  EnergieRich  ");
+  
   //WiFi stuff   
   WiFi.begin(ssid, password); 
   while (WiFi.status() != WL_CONNECTED) { //Wi-Fi connection check
@@ -101,7 +102,7 @@ void loop(){
     }
      getVoltage();
      getCurrent();
-    // getDust();    
+     getDust();    
 
     /*Start post request to send data*/
     HTTPClient http;
@@ -138,7 +139,7 @@ void loop(){
 
 /*reads voltage*/
 void getVoltage(){
-  voltage = 14.75*3.3*(analogRead(volt_pin)/4095.0); // change 15 to 11.09
+  voltage = 12*3.3*(analogRead(volt_pin)/4095.0); // change 12 to 11.09 or increase to adjust
   //print to LCD
   lcdPrintFirstLine("Voltage:");
   lcdPrintSecondLine(String(voltage)+"V");
@@ -172,8 +173,7 @@ void getHumidity(){
 void getDust(){
   if(Serial2.available()){
     dust = (Serial2.readString()).toFloat();
-    Serial.println(PMData);
-   }
+  }
   //print to LCD
   lcdPrintFirstLine("Dust:");
   lcdPrintSecondLine(String(dust));
@@ -181,8 +181,6 @@ void getDust(){
 
 /*reads light intensity*/
 void getLightIntensity(){
-  //light_intensity = random(100);
-
   light_intensity = lightMeter.readLightLevel();  
   //print to LCD
   lcdPrintFirstLine("Light Intensity:");
