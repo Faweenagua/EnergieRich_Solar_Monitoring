@@ -12,6 +12,9 @@ LCD {GND: GND, Vcc:Vin, SDA: SDA/21, SCL:SCL/22}
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BME680.h"
 
+#define RXD2 19
+#define TXD2 4
+
 /*I2C stuff*/
 LiquidCrystal_I2C lcd(0x27, 16, 2); //Set LCD
 BH1750 lightMeter;
@@ -41,6 +44,7 @@ int volt_pin = 32;
 void setup(){
   //start serial monitor and LCD
   Serial.begin(115200);
+  Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
   lcd.begin();                     
   lcd.backlight();
   lcdPrintFirstLine("System Starting");
@@ -166,7 +170,10 @@ void getHumidity(){
 
 /*reads dust*/
 void getDust(){
-  dust = random(100);
+  if(Serial2.available()){
+    dust = (Serial2.readString()).toFloat();
+    Serial.println(PMData);
+   }
   //print to LCD
   lcdPrintFirstLine("Dust:");
   lcdPrintSecondLine(String(dust));
