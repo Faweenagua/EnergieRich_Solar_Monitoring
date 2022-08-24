@@ -2,7 +2,7 @@
 #include "PMS.h"
 #include "SoftwareSerial.h"
  
-SoftwareSerial Serial1(2, 3); // RX, TX
+SoftwareSerial Serial1(4, 5); // RX, TX
  
 PMS pms(Serial1);
 PMS::DATA data;
@@ -22,7 +22,8 @@ void loop()
     // Serial.println("Dust Concentration");
     // Serial.println("PM1.0 :" + String(data.PM_AE_UG_1_0) + "(ug/m3)");
     // Serial.println("PM2.5 :" + String(data.PM_AE_UG_2_5) + "(ug/m3)");
-    Serial.println("PM10  :" + String(data.PM_AE_UG_10_0) + "(ug/m3)");
+    // Serial.println("PM10  :" + String(data.PM_AE_UG_10_0) + "(ug/m3)");
+    Serial.println(String(data.PM_AE_UG_10_0));
     delay(5000);
   }
 }
